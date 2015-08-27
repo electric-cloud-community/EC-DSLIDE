@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exportedData version="71" buildLabel="build_main_95797_2015.08.15_03:00:36" buildVersion="5.4.0" passkey="6672ee4b338c25f6d51dcc52e22d6284c4ab79a9">
+  <exportPath>/plugins/EC-DSLIDE/project</exportPath>
+  <project>
+    <projectName>EC-DSLIDE-1.0</projectName>
+    <tracked>0</tracked>
+    <propertySheet>
+      <tracked>0</tracked>
+      <property>
+        <propertyName>ec_setup</propertyName>
+        <counter>0</counter>
+        <description></description>
+        <expandable>1</expandable>
+        <tracked>0</tracked>
+        <value></value>
+      </property>
+    </propertySheet>
+  </project>
+</exportedData>

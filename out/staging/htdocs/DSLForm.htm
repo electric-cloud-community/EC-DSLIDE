@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<body>
+
+<form action="">
+	DSL: 
+	<input type="text" value="return getJobs" id="dsl">
+	<br><br>
+	<input type="submit" value="Submit" onclick="runDsl()">
+</form>
+
+</p>
+RESPONSE: <p id="result"></p>
+
+<script>
+  function runDsl() {
+    //document.getElementById('input').innerHTML = document.getElementById("dsl").value;
+	//console.log(document.getElementById("dsl").value);
+    var data = { "dsl": document.getElementById("dsl").value };
+    $.ajax({
+      type: "POST",
+      url: "../rest/v1.0/server/dsl",
+      dataType: 'Object',
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify(data),
+      success: function (data) {
+        testing = data;
+        console.log(testing);
+		document.getElementById('result').innerHTML = testing;
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<componentContainer>
+  <table width="100%">
+    <tr>
+      <td valign="top" width="50%">
+        <component plugin="EC-Core" ref="urlLoader">
+          <plugin>EC-DSLIDE</plugin>
+          <version>1.0</version>
+          <url>../../../plugins/EC-DSLIDE/index.html</url>
+        </component>
+      </td>
+    </tr>
+  </table>
+</componentContainer>

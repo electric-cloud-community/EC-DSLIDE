@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+
+<title>DSL IDE - ElectricFlow</title>
+<link rel="shortcut icon" href="https://flow/commander/favicon.ico" />
+
+
+<!--
+  <link href="/commander/styles/global.css?v=6.1.0.95292" rel="stylesheet" type="text/css" />
+  <link href="/commander/styles/Form.css?v=6.1.0.95292" rel="stylesheet" type="text/css" />
+  <link href="/commander/styles/StdFrame.css?v=6.1.0.95292" rel="stylesheet" type="text/css" />
+  <link href="/commander/styles/ActionList.css?v=6.1.0.95292" rel="stylesheet" type="text/css" />
+  <link href="/commander/styles/Header.css?v=6.1.0.95292" rel="stylesheet" type="text/css" />
+ -->
+<meta charset="utf-8"/>
+
+<link rel='stylesheet prefetch' href='CodeMirror/lib/font-awesome.css'>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel=stylesheet href="CodeMirror/lib/codemirror.css">
+<link rel="stylesheet" href="CodeMirror/addon/hint/show-hint.css">
+<link rel=stylesheet href="CodeMirror/doc/docs.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="CodeMirror/lib/codemirror.js"></script>
+<script src="CodeMirror/lib/formatting.js"></script>
+<script src="CodeMirror/mode/groovy/groovy.js"></script>
+<script src="CodeMirror/addon/hint/show-hint.js"></script>
+<script src="CodeMirror/addon/hint/anyword-hint.js"></script>
+<script src="CodeMirror/addon/edit/matchbrackets.js"></script>
+<script src="filemanager.js"></script>
+
+<style class="cp-pen-styles">#editControls {
+   text-align:center;
+  padding:5px;
+  margin:5px;
+  }
+  a:link {text-decoration:none;}
+  a:visited {text-decoration:none;}
+  a:hover {text-decoration:none;}
+  a:active {text-decoration:none;}
+  a{
+    color:black;
+    padding:5px;
+    border:1px solid silver;
+    border-radius:5px;
+    width:1em;
+  }
+</style>   
+
+<style>
+  .CodeMirror { height: auto; border: 1px solid #ddd; }
+  .CodeMirror-scroll { max-height: 200px; }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+</style>
+
+<article>
+<section id=demo>
+  <div class=actions>
+    <div class=actionspicture>
+      <img src="CodeMirror/images/EClogo.png">
+    </div>
+  </div>
+
+
+  <h2>DSL Editor Lite</h2>
+  <div id='editControls'>
+    <div>
+          <a data-role='fileOpen' href='javascript:void(0)'><i class='fa fa-folder-open'></i></a>    
+          <a data-role='fileSave' href='javascript:void(0)'><i class='fa fa-file'></i></a>    
+          <a data-role='undo' href='javascript:void(0)'><i class='fa fa-undo'></i></a>
+          <a data-role='clear' href='javascript:void(0)'><i class='fa fa-eraser'></i></a>
+          <a href="#" data-role='justifyFull'><i class='fa fa-align-justify'></i></a>
+		  <a data-role='help' href="javascript:void(0)" ><i class='fa fa-question-circle'></i></a>
+    </div>      
+  </div>
+
+  <form style="position: relative; margin-top: .5em;">
+  <select id="objectlist" onchange="getExample(this.options[this.selectedIndex].value)">
+    <option value="#">Examples</option>
+    <option value="procedure">Procedure</option>      
+    <option value="application">Application</option>
+    <option value="pipeline">Pipeline (Create App First)</option>
+    <option value="collectObjects">Collect Objects</option>
+    <option value="fileOps">Load value from file</option>
+    <option value="listProjects">Iterate: list projects</option>
+  </select>
+  <textarea id=demotext>
+
+  
+  
+
+
+
+
+
+
+  </textarea>
+  <input type = "button"
+        value = "Submit DSL"
+        onclick = "runDsl();"/>   
+	<input type = "file"
+		id = "_loadFile"
+		accept = ".groovy"
+		value = "Load DSL"
+		style = "visibility:hidden;" 
+        onchange = "load(event, editor);"/>   
+  </form>
+
+  <textarea id="result" style="width: 600px; height: 150px;"></textarea>
+
+
+  <script>
+    var minLines = 12;
+    var startingValue = '';
+	/*
+    for (var i = 0; i < minLines; i++) {
+        startingValue += '\n';
+    }
+	*/
+
+    var hotkey = function (e) {
+         if (e.shiftKey) {
+			console.log('foo');
+			getHelp(getSelection());
+		}
+    };
+    $(document).keypress(hotkey);
+
+    CodeMirror.commands.autocomplete = function(cm) {
+        cm.showHint({hint: CodeMirror.hint.anyword});
+    }
+    var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+      lineNumbers: true,
+      gutter: true,
+      lineWrapping: true,
+      mode: "text/x-groovy",
+      extraKeys: {"Ctrl-Space": "autocomplete"},
+      onKeyEvent: function(e , s){
+            hotkey($.event.fix(e));
+      },
+      value: startingValue
+    });
+
+    var resultWindow = CodeMirror.fromTextArea(document.getElementById("result"), {
+      lineNumbers: false,
+      gutter: true,
+      lineWrapping: true,
+	  readOnly: "nocursor",
+      mode: "text/x-groovy"
+    });
+    //resultWindow.setSize( width: 600, height: 150 );
+
+	function populateEditor(txt) {
+		//var txt = "myText - " + objName;
+		//editor.replaceSelection(txt);
+		var inchar = editor.findWordAt(editor.getCursor());
+		editor.replaceRange(txt, inchar.anchor, inchar.head );
+
+		format();
+	}
+
+    function format() {
+      var totalLines = editor.lineCount();  
+      editor.autoFormatRange({line:0, ch:0}, {line:totalLines});
+    }
+
+    function getSelection() {
+        console.log ( editor.getSelection());
+		return editor.getSelection();
+    }
+
+    function submitDsl() {
+      console.log(editor.getValue());
+	  return editor.getValue();
+    }
+
+	function getTemplate(tempName) {
+	var templateFile = 'templates/'+tempName+'.tmp';
+	console.log('Inside gettemplate - TemplateName' + templateFile);
+	getFile ( templateFile );
+	}
+
+	function getExample(name) {
+	var fileName = 'examples/'+name+'.groovy';
+	console.log('getExample' + name);
+	editor.setValue("");
+	getFile ( fileName );
+	}
+
+	function getFile(fileName) {
+	$.ajax(fileName, {
+	dataType: 'text',
+	success: function (data) {
+	console.log('Ajax call was sucessfull');
+	populateEditor (data);
+	},
+	error: function(data, textStatus, errorThrown){
+	console.log('request failed' +
+	textStatus + ' errorThrown ' + errorThrown);
+    }
+      }); 
+    }
+
+    function runDsl() {
+		resultWindow.setValue( "" );
+      var data = { "dsl": editor.getValue() };
+      //var data = { "dsl": 'return "testing..."' };
+      $.ajax({
+        type: "POST",
+        url: "../../../rest/v1.0/server/dsl",
+        dataType: 'Object',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+        success: function (data) {
+          testing = data;
+          console.log(testing);
+          //document.getElementById('result').innerHTML = testing.responseText;
+		  resultWindow.setValue( testing.responseText );
+        },
+        error: function (data, testStatus, errorThrown) {
+          testing = data;
+          console.log(testing);
+		  keyname = Object.keys(JSON.parse(testing.responseText))[0];
+		  textToShow = JSON.parse(testing.responseText)[keyname];
+		  t=typeof(textToShow);
+		  if (t=="[object]" | t!="string") {textToShow=JSON.stringify(textToShow)};
+		  resultWindow.setValue( textToShow );
+		  //resultWindow.setValue( testing.responseText);
+        }
+      });
+    }  
+
+    function setSelectOptions(list, optionString) {
+      var inchar = editor.findWordAt(editor.getCursor());
+      var word = editor.getRange(inchar.anchor, inchar.head);
+      console.log(optionString+"---"+JSON.stringify(inchar)+"---"+JSON.stringify(word));
+       if (optionString.indexOf(word) == 0) list.push(optionString);
+    }
+	
+  function getHelp() {
+    var sel = getSelection();
+	if (sel){
+    var data = { "dsl": sel, "describe": "true" };
+    //var data = { "dsl": "step", "describe": "true" };
+    $.ajax({
+      type: "POST",
+      url: "../../../rest/v1.0/server/dsl",
+      dataType: 'Object',
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify(data),
+	  /*
+      success: function (data) {
+        testing = data;
+        console.log(testing);
+      }
+	  */
+	success: function (data) {
+	  testing = data;
+	  console.log(testing);
+	  document.getElementById('result').innerHTML = JSON.parse(testing.responseText).value;
+	  resultWindow.setValue( JSON.parse(testing.responseText).value );
+	},
+	error: function (data, testStatus, errorThrown) {
+	  testing = data;
+	  console.log(testing);
+	  resultWindow.setValue( JSON.parse(testing.responseText).value );
+	}	  
+    });
+	} else {
+		resultWindow.setValue(`\
+Welcome to EF DSL Editor
+
+Enter your DSL commands and press "Submit DSL" to run
+
+Press <ctrl>-SPACE to list available DSL commands
+- Type first few letters of command to filter
+
+Use the "Examples" pull down to load sample DSL
+
+Select a DSL command and press ? button to get help on the command
+
+Buttons
+- File Open... open a client-side DSL file
+- File Save... save a client-side DSL file
+- Undo
+- Erase results window content
+- Format the DSL window
+- Help
+		`);
+	}
+  }	
+    $('#editControls a').click(function (e) {
+        switch ($(this).data('role')) {
+         case 'undo':
+            console.log($(this).data('role'));
+            editor.undo();
+            break;
+		 case 'fileOpen':
+            console.log($(this).data('role'));
+            document.getElementById('_loadFile').click();
+            break;
+		 case 'fileSave':
+            console.log($(this).data('role'));
+            save(editor.getValue(), 'dsl.groovy' );
+            break;
+		 case 'justifyFull':
+            console.log($(this).data('role'));
+			format();
+            break;
+		 case 'help':
+            console.log($(this).data('role'));
+			getHelp();
+            break;
+		 case 'clear':
+            console.log($(this).data('role'));
+			resultWindow.setValue( "" );
+            break;
+         default:
+            console.log($(this).data('role'));
+            break;
+        }
+        //updateEditor();
+    });
+
+  </script>
+  
+</section>
+
+</article>
+
+</html>

@@ -1,0 +1,7 @@
+step "name",
+	command: "ectool runWorkflow <projectName> <workflowDefinitionName> " +
+        " --actualParameter <var1>=<val1> [<var2>=<val2> ...]] " +
+        " --credential <credName>=<userName> [<credName>=<userName> ...]] " +
+        " --priority <low|normal|high|highest>] " +
+        " --startingState <startingState>]
+

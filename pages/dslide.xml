@@ -1,0 +1,13 @@
+<componentContainer>
+  <table width="100%">
+    <tr>
+      <td valign="top" width="50%">
+        <component plugin="EC-Core" ref="urlLoader">
+          <plugin>@PLUGIN_KEY@</plugin>
+          <version>1.0</version>
+          <url>../../../plugins/@PLUGIN_KEY@/index.html</url>
+        </component>
+      </td>
+    </tr>
+  </table>
+</componentContainer>

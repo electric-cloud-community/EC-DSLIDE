@@ -1,0 +1,14 @@
+Get list of objects
+ectool --help | grep -Po "^\s+create(\w+)"|sed 's/    create//'|sed -e 's/\(\w\)/\L\1/'
+ectool --help | grep -Po "^\s+create(\w+)"|sed 's/    create//'|sed -e 's/\(\w\)/list.push(\"\L\1/'|sed 's/$/")/'
+
+
+ectool --help | grep -Po "^\s+create(\w+)"|sed 's/    create//'|sed -e 's/\(\w\)/list.push(\"\L\1/'|sed 's/$/");/'
+ectool --help | grep -Po "^\s+get(\w+)"|sed 's/    get/get/'|sed -e 's/\(\w\)/list.push(\"\L\1/'|sed 's/$/");/'
+
+
+for i in `ectool --help | grep -Po "^\s+get(\w+)"|sed 's/    get/get/'`;
+do
+echo $i'()' > $i.tmp;
+done
+

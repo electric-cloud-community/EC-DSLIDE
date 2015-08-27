@@ -1,0 +1,8 @@
+step "name",
+	subproject: "EC-pluginName",
+	subprocedure: "stepname",
+	actualParameter: [
+		parm1: "value",
+		parm2: "value"
+	]
+

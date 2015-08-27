@@ -1,0 +1,21 @@
+<componentContainer>
+  <!--
+    The helpLink element points to a page containing help text. This
+    shows up as the target of the EC Help link in the top-right corner
+    of the page. If you don't have page-specific help for this page, you
+    should point this to the plugin help page.
+  -->
+  <helpLink>help</helpLink>
+  <title>EC-DSLIDE 1.0 EC_DSLIDE Title</title>
+  <table width="100%">
+    <tr>
+      <td valign="top" width="50%">
+        <component plugin="EC-Core" ref="urlLoader">
+          <plugin>EC-DSLIDE</plugin>
+          <version>1.0</version>
+          <url>cgi-bin/EC_DSLIDE.cgi</url>
+        </component>
+      </td>
+    </tr>
+  </table>
+</componentContainer>

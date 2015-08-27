@@ -1,0 +1,2 @@
+step "name",
+	command: "command"
