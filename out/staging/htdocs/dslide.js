@@ -95,7 +95,7 @@ function runDsl() {
   //var data = { "dsl": 'return "testing..."' };
   $.ajax({
 	type: "POST",
-	url: "../rest/v1.0/server/dsl",
+	url: "../../../rest/v1.0/server/dsl",
 	dataType: 'Object',
 	contentType: 'application/json; charset=utf-8',
 	data: JSON.stringify(data),
@@ -132,7 +132,7 @@ var data = { "dsl": sel, "describe": "true" };
 //var data = { "dsl": "step", "describe": "true" };
 $.ajax({
   type: "POST",
-  url: "../rest/v1.0/server/dsl",
+  url: "../../../rest/v1.0/server/dsl",
   dataType: 'Object',
   contentType: 'application/json; charset=utf-8',
   data: JSON.stringify(data),
@@ -189,6 +189,7 @@ $('#editControls a').click(function (e) {
 		break;
 	 case 'fileSave':
 		console.log($(this).data('role'));
+		console.log(editor.getValue());
 		save(editor.getValue(), 'dsl.groovy' );
 		break;
 	 case 'justifyFull':
@@ -209,4 +210,3 @@ $('#editControls a').click(function (e) {
 	}
 	//updateEditor();
 });
-
