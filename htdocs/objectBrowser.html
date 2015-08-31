@@ -13,6 +13,7 @@
 <button id="json">Get Projects</button>
 
 <script type="text/javascript">
+var out = "<ul>";
 $('#json').click(function(){
 	//alert('json');
 	 $.getJSON("../../../rest/v1.0/projects",
@@ -21,7 +22,6 @@ $('#json').click(function(){
 				})
 	.done(function(projectResponse) {
 	 //function(projectResponse) {
-		var out = "<ul>";
 		for (var projIndex in projectResponse.project) {
 			out += "<li>" + projectResponse.project[projIndex].projectName + "</li>";
 			var procedures = $.getJSON("../../../rest/v1.0/projects/" + projectResponse.project[projIndex].projectName + "/procedures",
