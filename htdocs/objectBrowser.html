@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<title>Electric Flow Object Browser</title>
+<link rel="shortcut icon" href="https://flow/commander/favicon.ico" />
+
+<link rel="stylesheet" href="ajax/libs/jquery-ui.css">
+<script src="ajax/libs/jquery.min.js"></script>
+<script src="ajax/libs/jquery-ui.min.js"></script>
+
+<body>
+
+<button id="json">Get Projects</button>
+
+<script type="text/javascript">
+$('#json').click(function(){
+	//alert('json');
+	 $.getJSON("../../../rest/v1.0/projects",
+	 function() {
+				  console.log( "projects success" );
+				})
+	.done(function(projectResponse) {
+	 //function(projectResponse) {
+		var out = "<ul>";
+		for (var projIndex in projectResponse.project) {
+			out += "<li>" + projectResponse.project[projIndex].projectName + "</li>";
+			var procedures = $.getJSON("../../../rest/v1.0/projects/" + projectResponse.project[projIndex].projectName + "/procedures",
+				function() {
+				  console.log( "procedure success" );
+				})
+				  .done(function(procedureResponse) {
+					console.log( "procedure second success" );
+					if (procedureResponse.procedure) {
+						out += "<ul>";
+						for (var procIndex in procedureResponse.procedure) {
+							out += "<li>" + procedureResponse.procedure[procIndex].procedureName + "</li>";
+						}
+						//out += "<li>test...</li>";
+						//procedureResponse.procedure.forEach(listProcedures);
+						out += "</ul>";
+					}
+				  })
+				  .fail(function() {
+					console.log( "procedure error" );
+				  })
+				  .always(function() {
+					console.log( "procedure complete" );
+				  });
+			
+		}
+		//projectResponse.project.forEach(listProjects);
+		document.getElementById('demo').innerHTML = out + "</ul>";
+		out = "";
+	  })
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });   
+});
+</script>
+
+<p id="demo"></p>
+
+</body>
+
+</html>
