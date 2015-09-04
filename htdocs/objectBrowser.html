@@ -10,58 +10,115 @@
 
 <body>
 
-<button id="json">Get Projects</button>
+<button id="refreshProjectList" onclick=getProjects()>Insert Subprocedure Step</button>
 
-<script type="text/javascript">
-var out = "<ul>";
-$('#json').click(function(){
-	//alert('json');
-	 $.getJSON("../../../rest/v1.0/projects",
+<select id="selectProject" onChange="if(this.selectedIndex!=0)
+{project=this.options[this.selectedIndex].value;getProcedures()}">
+    <option>Choose a Project</option>
+</select>
+
+<select id="selectProcedure" onChange="if(this.selectedIndex!=0) {procedure=this.options[this.selectedIndex].value;insertSubprocedure()}">
+    <option>Choose a Procedure</option>
+</select>
+
+<script>
+var project = "";
+var procedure = "";
+
+function getProjects(){
+	// Clean list of earlier entries
+	$("#selectProject > option").remove();
+	var select = document.getElementById("selectProject");
+	var el = document.createElement("option");
+	el.textContent = "Choose a Project";
+	select.appendChild(el);
+
+	// Get project list
+	$.getJSON("../../../rest/v1.0/projects",
 	 function() {
 				  console.log( "projects success" );
 				})
 	.done(function(projectResponse) {
-	 //function(projectResponse) {
-		for (var projIndex in projectResponse.project) {
-			out += "<li>" + projectResponse.project[projIndex].projectName + "</li>";
-			var procedures = $.getJSON("../../../rest/v1.0/projects/" + projectResponse.project[projIndex].projectName + "/procedures",
-				function() {
-				  console.log( "procedure success" );
-				})
-				  .done(function(procedureResponse) {
-					console.log( "procedure second success" );
-					if (procedureResponse.procedure) {
-						out += "<ul>";
-						for (var procIndex in procedureResponse.procedure) {
-							out += "<li>" + procedureResponse.procedure[procIndex].procedureName + "</li>";
-						}
-						//out += "<li>test...</li>";
-						//procedureResponse.procedure.forEach(listProcedures);
-						out += "</ul>";
-					}
-				  })
-				  .fail(function() {
-					console.log( "procedure error" );
-				  })
-				  .always(function() {
-					console.log( "procedure complete" );
-				  });
-			
+		for(var i = 0; i < projectResponse.project.length; i++) {
+			var opt = projectResponse.project[i].projectName;
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);
 		}
-		//projectResponse.project.forEach(listProjects);
-		document.getElementById('demo').innerHTML = out + "</ul>";
-		out = "";
-	  })
+	})
 	  .fail(function() {
 		console.log( "project error" );
 	  })
 	  .always(function() {
 		console.log( "project complete" );
 	  });   
-});
+}
+
+function getProcedures() {
+	// Clean list of earlier entries
+	$("#selectProcedure > option").remove();
+	var select = document.getElementById("selectProcedure");
+	var el = document.createElement("option");
+	el.textContent = "Choose a Procedure";
+	select.appendChild(el);
+
+	var procedures = [];
+	$.getJSON("../../../rest/v1.0/projects/"+project+"/procedures",
+	 function() {
+				  console.log( "procedures success" );
+				})
+	.done(function(procedureResponse) {
+		for (var procIndex in procedureResponse.procedure) {
+			procedures.push(procedureResponse.procedure[procIndex].procedureName);
+		}
+		var select = document.getElementById("selectProcedure");
+		for(var i = 0; i < procedures.length; i++) {
+			var opt = procedures[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);
+	}
+	  })
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });
+}
+
+function insertSubprocedure() {
+	$.getJSON("../../../rest/v1.0/projects/"+project+"/procedures/"+procedure+"/formalParameters",
+	 function() {
+				  console.log( "steps success" );
+				})
+	.done(function(paramResponse) {
+		var stepTemplate=""
+		stepTemplate += "<br>step \"name\",";
+		stepTemplate += "<br>  subproject : \""+project+"\",";
+		stepTemplate += "<br>  subprocedure : \""+procedure+"\",";
+		stepTemplate += "<br>  actualParameter : [";
+		for (var paramIndex in paramResponse.formalParameter) {
+			stepTemplate += "<br>    " + paramResponse.formalParameter[paramIndex].formalParameterName +
+				": \"" + paramResponse.formalParameter[paramIndex].defaultValue + "\",";
+			if (paramResponse.formalParameter[paramIndex].required=="1") stepTemplate +=	"  \/\/ required"
+		}		
+		stepTemplate += "<br>  ]";
+		document.getElementById('stepOutput').innerHTML = stepTemplate;
+	  })
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });
+}
+
 </script>
 
-<p id="demo"></p>
+<p id="stepOutput"></p>
 
 </body>
 
