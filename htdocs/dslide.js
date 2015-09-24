@@ -1,3 +1,6 @@
+// Chg history
+// 9.24.15 - Set resultWindow to readonly to allow copy (issue 5);
+
 var minLines = 12;
 var startingValue = '';
 /*
@@ -33,7 +36,7 @@ var resultWindow = CodeMirror.fromTextArea(document.getElementById("result"), {
   lineNumbers: false,
   gutter: true,
   lineWrapping: true,
-  readOnly: "nocursor",
+  readOnly: true,
   mode: "text/x-groovy"
 });
 //resultWindow.setSize( width: 600, height: 150 );

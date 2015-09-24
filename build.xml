@@ -25,5 +25,5 @@
   </path>
   <property name="gwt.path.extras" value="extras" />
 
-  <import file="C:/Program Files/Electric Cloud/CommanderSDK/build/buildTargets.xml" />
+  <import file="/vagrant/CommanderSDK/build/buildTargets.xml" />
 </project>
