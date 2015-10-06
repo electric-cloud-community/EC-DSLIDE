@@ -1,5 +1,6 @@
 // Chg history
 // 9.24.15 - Set resultWindow to readonly to allow copy (issue 5);
+// 10.6.15 - Improved results window output: removed JSON and \n
 
 var minLines = 12;
 var startingValue = '';
@@ -93,8 +94,8 @@ textStatus + ' errorThrown ' + errorThrown);
 }
 
 function runDsl() {
-	resultWindow.setValue( "" );
   var data = { "dsl": editor.getValue() };
+  resultWindow.setValue( "Sending DSL:\n" + data["dsl"]);
   //var data = { "dsl": 'return "testing..."' };
   $.ajax({
 	type: "POST",
@@ -113,8 +114,11 @@ function runDsl() {
 	  console.log(testing);
 	  keyname = Object.keys(JSON.parse(testing.responseText))[0];
 	  textToShow = JSON.parse(testing.responseText)[keyname];
+	  if (keyname == "error") textToShow = textToShow.message;
 	  t=typeof(textToShow);
-	  if (t=="[object]" | t!="string") {textToShow=JSON.stringify(textToShow)};
+	  //if (t=="[object]" | t!="string") {textToShow=JSON.stringify(textToShow)};
+	  if (t=="[object]") {textToShow=JSON.stringify(textToShow,null,'\t')};
+	  if (t!="string") {textToShow=JSON.stringify(textToShow,null,'\t')};
 	  resultWindow.setValue( textToShow );
 	  //resultWindow.setValue( testing.responseText);
 	}

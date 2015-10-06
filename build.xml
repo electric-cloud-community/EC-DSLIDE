@@ -5,7 +5,7 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.0" />
+  <property name="pluginVersion" value="1.1" />
 
   <path id="extras">
     <!-- Add extra jars that need to be in the classpath for building the 
@@ -25,5 +25,5 @@
   </path>
   <property name="gwt.path.extras" value="extras" />
 
-  <import file="/vagrant/CommanderSDK/build/buildTargets.xml" />
+  <import file="C:\Program Files\Electric Cloud\CommanderSDK\build\buildTargets.xml" />
 </project>
