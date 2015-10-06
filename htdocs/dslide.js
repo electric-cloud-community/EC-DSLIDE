@@ -1,6 +1,7 @@
 // Chg history
 // 9.24.15 - Set resultWindow to readonly to allow copy (issue 5);
 // 10.6.15 - Improved results window output: removed JSON and \n
+//         - Added insert procedure step
 
 var minLines = 12;
 var startingValue = '';
@@ -217,3 +218,108 @@ $('#editControls a').click(function (e) {
 	}
 	//updateEditor();
 });
+
+var project = "";
+var procedure = "";
+
+function getProjects(){
+	// Clean list of earlier entries
+	$("#selectProject > option").remove();
+	var select = document.getElementById("selectProject");
+	var el = document.createElement("option");
+	el.textContent = "Choose a Project";
+	select.appendChild(el);
+
+	// Get project list
+	$.getJSON("../../../rest/v1.0/projects",
+	 function() {
+				  console.log( "projects success" );
+				})
+	.done(function(projectResponse) {
+		for(var i = 0; i < projectResponse.project.length; i++) {
+			var opt = projectResponse.project[i].projectName;
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);
+		}
+	})
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });   
+}
+
+function getProcedures() {
+	// Clean list of earlier entries
+	$("#selectProcedure > option").remove();
+	var select = document.getElementById("selectProcedure");
+	var el = document.createElement("option");
+	el.textContent = "Choose a Procedure";
+	select.appendChild(el);
+
+	var procedures = [];
+	$.getJSON("../../../rest/v1.0/projects/"+project+"/procedures",
+	 function() {
+				  console.log( "procedures success" );
+				})
+	.done(function(procedureResponse) {
+		for (var procIndex in procedureResponse.procedure) {
+			procedures.push(procedureResponse.procedure[procIndex].procedureName);
+		}
+		var select = document.getElementById("selectProcedure");
+		for(var i = 0; i < procedures.length; i++) {
+			var opt = procedures[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);
+	}
+	  })
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });
+}
+
+function insertSubprocedure() {
+	$.getJSON("../../../rest/v1.0/projects/"+project+"/procedures/"+procedure+"/formalParameters",
+	 function() {
+				  console.log( "steps success" );
+				})
+	.done(function(paramResponse) {
+		var stepTemplate=""
+		stepTemplate += "step \"name\",\n";
+		stepTemplate += "  subproject : \""+project+"\",\n";
+		stepTemplate += "  subprocedure : \""+procedure+"\"";
+		
+		// Only if parameters present
+		if (paramResponse.formalParameter) {
+			stepTemplate += ",\n";
+			stepTemplate += "  actualParameter : [\n";
+			for (var paramIndex in paramResponse.formalParameter) {
+				stepTemplate += "    " + paramResponse.formalParameter[paramIndex].formalParameterName +
+					": \"" + paramResponse.formalParameter[paramIndex].defaultValue + "\",";
+				if (paramResponse.formalParameter[paramIndex].required=="1") {
+					stepTemplate +=	"  \/\/ required\n"
+				} else {
+					stepTemplate +=	"\n"
+				}
+			}		
+			stepTemplate += "  ]\n";
+		}
+		
+		editor.replaceSelection(stepTemplate)
+	  })
+	  .fail(function() {
+		console.log( "project error" );
+	  })
+	  .always(function() {
+		console.log( "project complete" );
+	  });
+}
+
