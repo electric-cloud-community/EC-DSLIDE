@@ -182,6 +182,8 @@ Buttons
 - Erase results window content
 - Format the DSL window
 - Help
+
+To insert a subprocedure step, press the "Insert Subprocedure Step" button.  This will populate the "Choose a Project" pull down menu. Choose the procedure project.  This will populate the "Choose a Procedure" pull down menu.  Select the desired procedure. The step template will appear in the editor.
 	`);
 }
 }	
