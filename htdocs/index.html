@@ -53,13 +53,16 @@
   .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
 </style>
 
+
+
 <article>
 <section id=demo>
   <div class=actions>
     <div class=actionspicture>
       <img src="CodeMirror/images/EClogo.png">
-	  <h2>Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.</h2>
-    </div>
+<h2>
+Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.
+</h2>    </div>
   </div>
 
 
@@ -85,7 +88,16 @@
     <option value="listProjects">Iterate: list projects</option>
   </select>
   
-
+<div id="insertStep">
+	<button id="refreshProjectList" onclick=getProjects()>Insert Subprocedure Step</button>
+	<select id="selectProject" onChange="if(this.selectedIndex!=0)
+	{project=this.options[this.selectedIndex].value;getProcedures()}">
+		<option>Choose a Project</option>
+	</select>
+	<select id="selectProcedure" onChange="if(this.selectedIndex!=0) {procedure=this.options[this.selectedIndex].value;insertSubprocedure()}">
+		<option>Choose a Procedure</option>
+	</select>
+</div>
   
   <textarea id=demotext>
 
@@ -116,14 +128,7 @@
         onchange = "load(event, editor);"/>   
   </form>
 
-<button id="refreshProjectList" onclick=getProjects()>Insert Subprocedure Step</button>
-<select id="selectProject" onChange="if(this.selectedIndex!=0)
-{project=this.options[this.selectedIndex].value;getProcedures()}">
-    <option>Choose a Project</option>
-</select>
-<select id="selectProcedure" onChange="if(this.selectedIndex!=0) {procedure=this.options[this.selectedIndex].value;insertSubprocedure()}">
-    <option>Choose a Procedure</option>
-</select>
+
 
   <textarea id="result" style="width: 600px; height: 150px;"></textarea>
 
