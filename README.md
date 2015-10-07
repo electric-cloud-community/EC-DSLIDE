@@ -6,5 +6,10 @@ The DSL IDE is an ElectricFlow plugin.  The plugin jar file is located in the 'o
 
 This tool was developed during and Electric Cloud hackathon in August 2015.  While we feel it is useful in its current form, it is provided "as is" with no commitment to further support.  Please feel free to offer suggestions in the form of Github project "Issues" and we or others in the Github community will try to address them.
 
+## Support information
+This tool has had very little testing.  It was developed with the ElectricFlow SDK 6.0.
+
+Seem to work fine on Chrome and Firefox.  It does not seem to run on Internet Explorer.
+
 ## Acknowledgements
 This tool was build on top of https://github.com/codemirror/CodeMirror.  We greatly appreciate the contributions of the authors of Codemirror.
