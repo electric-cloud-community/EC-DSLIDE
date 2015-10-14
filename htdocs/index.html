@@ -76,18 +76,8 @@ Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.
 		  <a data-role='help' href="javascript:void(0)" ><i class='fa fa-question-circle'></i></a>
     </div>      
   </div>
-
-  <form style="position: relative; margin-top: .5em;">
-  <select id="objectlist" onchange="getExample(this.options[this.selectedIndex].value)">
-    <option value="#">Examples</option>
-    <option value="procedure">Procedure</option>      
-    <option value="application">Application</option>
-    <option value="pipeline">Pipeline (Create App First)</option>
-    <option value="collectObjects">Collect Objects</option>
-    <option value="fileOps">Load value from file</option>
-    <option value="listProjects">Iterate: list projects</option>
-  </select>
   
+
 <div id="insertStep">
 	<button id="refreshProjectList" onclick=getProjects()>Insert Subprocedure Step</button>
 	<select id="selectProject" onChange="if(this.selectedIndex!=0)
@@ -98,6 +88,20 @@ Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.
 		<option>Choose a Procedure</option>
 	</select>
 </div>
+
+  <div id='examples'>
+  <form style="position: relative; margin-top: .5em;">
+  <select id="objectlist" onchange="getExample(this.options[this.selectedIndex].value)">
+    <option value="#">Examples</option>
+    <option value="procedure">Procedure</option>      
+    <option value="application">Application</option>
+    <option value="pipeline">Pipeline (Create App First)</option>
+    <option value="collectObjects">Collect Objects</option>
+    <option value="fileOps">Load value from file</option>
+    <option value="listProjects">Iterate: list projects</option>
+  </select>
+  </div>
+  
   
   <textarea id=demotext>
 
