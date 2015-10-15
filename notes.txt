@@ -7,3 +7,14 @@ ectool --server flow login admin changeme
 cd C:\Users\gmaxey\Documents\MBO\EC-DSLIDE
 ant build deploy
 
+cygwin:
+cd "C:\Users\gmaxey\Documents\MBO\EC-DSLIDE"
+git status
+git commit . -m ""
+git pull
+git push
+
+cd out
+~/Dropbox-Uploader/dropbox_uploader.sh upload EC-DSLIDE.jar /
+
+rm ~/flow-demo/artifacts/EC-DSLIDE.jar
