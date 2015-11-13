@@ -9,6 +9,8 @@ This tool was developed during and Electric Cloud hackathon in August 2015.  Whi
 ## Support information
 This tool has had very little testing.  It was developed with the ElectricFlow SDK 6.0.
 
+The tool uses the ElectricFlow REST API.  Some users have experienced problems accessing the REST documentation and API; the workaround is to place the file restapi.conf (in the same directory as this README file) in the ElectricFlow Apache conf/conf.d directory and restart the commanderApache service.
+
 Seem to work fine on Chrome and Firefox.  It does not seem to run on Internet Explorer.
 
 ## Acknowledgements
