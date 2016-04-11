@@ -2,11 +2,33 @@
   <title>EC-DSLIDE Help</title>
   <h2>EC-DSLIDE Help</h2>
   <h3>Overview</h3>
-  <p>This plugin is a template that developers can use as a base for creating
-    their own plugins. Help text html is expected to be XHTML, meaning that the
-    document must be proper XML (e.g. all tags must be closed).</p>
+  <pre>Welcome to EF DSL Editor
+
+Enter your DSL commands and press "Submit DSL" to run
+
+Press ctrl-SPACE to list available DSL commands
+- Type first few letters of command to filter
+
+Use the "Examples" pull down to load sample DSL
+
+Select a DSL command and press ? button to get help on the command
+
+Buttons
+- File Open... open a client-side DSL file
+- File Save... save a client-side DSL file
+- Undo
+- Erase results window content
+- Format the DSL window
+- Help
+
+To insert a subprocedure step, press the "Insert Subprocedure Step" button.
+This will populate the "Choose a Project" pull down menu. Choose the
+procedure project.  This will populate the "Choose a Procedure" pull down
+menu.  Select the desired procedure. The step template will appear in the
+editor.
+</pre>
   <p>This plugin has the following pages:</p>
   <p>
-    <a href="EC_DSLIDE_run">EC_DSLIDE</a>
+    <a href="../../plugins/@PLUGIN_NAME@/index.html">DSL IDE</a>
   </p>
 </componentContainer>
