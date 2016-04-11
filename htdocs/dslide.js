@@ -239,7 +239,12 @@ function getProjects(){
 				})
 	.done(function(projectResponse) {
 		for(var i = 0; i < projectResponse.project.length; i++) {
-			var opt = projectResponse.project[i].projectName;
+			var opt;
+			if (projectResponse.project[i].pluginKey) {
+				opt = "/plugins/" + projectResponse.project[i].pluginKey + "/project";
+			} else {
+				opt = projectResponse.project[i].projectName;
+			}
 			var el = document.createElement("option");
 			el.textContent = opt;
 			el.value = opt;
@@ -295,9 +300,9 @@ function insertSubprocedure() {
 				})
 	.done(function(paramResponse) {
 		var stepTemplate=""
-		stepTemplate += "step \"name\",\n";
-		stepTemplate += "  subproject : \""+project+"\",\n";
-		stepTemplate += "  subprocedure : \""+procedure+"\"";
+		stepTemplate += "step \'name\',\n";
+		stepTemplate += "  subproject : \'"+project+"\',\n";
+		stepTemplate += "  subprocedure : \'"+procedure+"\'";
 		
 		// Only if parameters present
 		if (paramResponse.formalParameter) {
@@ -305,7 +310,7 @@ function insertSubprocedure() {
 			stepTemplate += "  actualParameter : [\n";
 			for (var paramIndex in paramResponse.formalParameter) {
 				stepTemplate += "    " + paramResponse.formalParameter[paramIndex].formalParameterName +
-					": \"" + paramResponse.formalParameter[paramIndex].defaultValue + "\",";
+					": \'" + paramResponse.formalParameter[paramIndex].defaultValue + "\',";
 				if (paramResponse.formalParameter[paramIndex].required=="1") {
 					stepTemplate +=	"  \/\/ required\n"
 				} else {

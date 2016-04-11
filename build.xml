@@ -5,7 +5,11 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.2" />
+  <property name="pluginVersion" value="1.3" />
+  <!-- 
+	1.3 - Add /plugin/<pluginKey>/project to Insert step
+		- Replace " with '
+  -->
 
   <path id="extras">
     <!-- Add extra jars that need to be in the classpath for building the 
