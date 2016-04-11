@@ -49,7 +49,7 @@ function populateEditor(txt) {
 	var inchar = editor.findWordAt(editor.getCursor());
 	editor.replaceRange(txt, inchar.anchor, inchar.head );
 
-	format();
+	//format();
 }
 
 function format() {
