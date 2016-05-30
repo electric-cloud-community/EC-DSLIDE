@@ -11,11 +11,14 @@ This tool was developed during and Electric Cloud hackathon in August 2015.  Whi
 * From the Electric Flow Administration, Plugin Tab, install this plugin file, then promote it
 
 ## Support information
-This tool has had very little testing.  It was developed with the ElectricFlow SDK 6.0.
+This tool was developed with the ElectricFlow SDK 6.0.
 
-The tool uses the ElectricFlow REST API.  Some users have experienced problems accessing the REST documentation and API; the workaround is to place the file restapi.conf (in the same directory as this README file) in the ElectricFlow Apache conf/conf.d directory and restart the commanderApache service.
+While this tool has had very little formal testing, it is actively used by the field engineers for editting and running DSL scripts.
 
-Seem to work fine on Chrome and Firefox.  It does not seem to run on Internet Explorer.
+### Known Issues
+* The tool uses the ElectricFlow REST API.  Some users have experienced problems accessing the REST documentation and API; the workaround is to place the file restapi.conf (in the same directory as this README file) in the ElectricFlow Apache conf/conf.d directory and restart the commanderApache service.
+
+* Works well on Chrome and Firefox.  It does not seem to run on Internet Explorer.
 
 ## Acknowledgements
 This tool was build on top of https://github.com/codemirror/CodeMirror.  We greatly appreciate the contributions of the authors of Codemirror.
