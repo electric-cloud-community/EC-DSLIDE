@@ -22,3 +22,7 @@ While this tool has had very little formal testing, the web-based DSL editor is 
 
 ## Acknowledgements
 This tool was build on top of https://github.com/codemirror/CodeMirror.  We greatly appreciate the contributions of the authors of Codemirror.
+
+## Licensing ##
+EC-DSLIDE is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/electric-cloud/EC-DSLIDE/blob/master/LICENSE) for the full license text.
+
