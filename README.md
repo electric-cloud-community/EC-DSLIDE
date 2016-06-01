@@ -1,6 +1,6 @@
 # EC-DSLIDE
 
-Electric Flow DSL web-based editor and runner
+ElectricFlow DSL web-based editor and runner
 
 The DSL IDE is an ElectricFlow plugin.  The plugin jar file is located in the 'out' directory. Once installed, the "DSL IDE" tab will appear on the ElectricFlow page.  It may be necessary to login to the ElectricFlow server again when launching the IDE.  Select the question mark icon for help.
 
@@ -8,7 +8,7 @@ This tool was developed during and Electric Cloud hackathon in August 2015.  Whi
 
 ## Installation information
 * Download out/EC-DSLIDE.jar
-* From the Electric Flow Administration, Plugin Tab, install this plugin file, then promote it
+* From the ElectricFlow Administration, Plugin Tab, install this plugin file, then promote it
 
 ## Support information
 This tool was developed with the ElectricFlow SDK 6.0.
