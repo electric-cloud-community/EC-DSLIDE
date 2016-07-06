@@ -2,29 +2,28 @@
   <title>EC-DSLIDE Help</title>
   <h2>EC-DSLIDE Help</h2>
   <h3>Overview</h3>
-  <pre>Welcome to EF DSL Editor
+  <pre>Welcome to ElectricFlow DSL Editor
 
-Enter your DSL commands and press "Submit DSL" to run
+Enter your DSL commands and press "Submit DSL" to run.
 
-Press ctrl-SPACE to list available DSL commands
-- Type first few letters of command to filter
+Press Ctrl+Spacebar to view a list available DSL commands. Type first few letters of a command to filter the list.
 
-Use the "Examples" pull down to load sample DSL
+Use the "Examples" pull-down menu to load sample DSL scripts.
 
-Select a DSL command and press ? button to get help on the command
+Select a DSL command and press the "?" button to get help on that command.
 
 Buttons
-- File Open... open a client-side DSL file
-- File Save... save a client-side DSL file
-- Undo
-- Erase results window content
-- Format the DSL window
-- Help
+- Click "File Open" to open a client-side DSL file.
+- Click "File Save" to save a client-side DSL file.
+- Click "Undo" to undo the previous change.
+- Click "Erase" to delete the contents in the results field.
+- Click "Format" to format the contents of the the DSL field.
+- Click "?" to view the Help documentation.
 
-To insert a subprocedure step, press the "Insert Subprocedure Step" button.
-This will populate the "Choose a Project" pull down menu. Choose the
-procedure project.  This will populate the "Choose a Procedure" pull down
-menu.  Select the desired procedure. The step template will appear in the
+For example, to insert a subprocedure step, click "Insert Subprocedure Step", which 
+will populate the "Choose a Project" pull-down menu. Choose the
+project to which the procedure belongs, which will populate the "Choose a Procedure" 
+pull-down menu, and then select a procedure. The step template will appear in the
 editor.
 </pre>
   <p>This plugin has the following pages:</p>
