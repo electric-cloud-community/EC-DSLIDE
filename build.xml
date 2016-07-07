@@ -5,8 +5,9 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.4" />
+  <property name="pluginVersion" value="1.4.1" />
   <!-- 
+	1.4.1 - Documentation updates
 	1.4 - Increase editor width to 100%
 		- Reduce starting editor to 5 lines
 	1.3 - Add /plugin/<pluginKey>/project to Insert step

@@ -10,7 +10,7 @@ Press Ctrl+Spacebar to view a list available DSL commands. Type first few letter
 
 Use the "Examples" pull-down menu to load sample DSL scripts.
 
-Select a DSL command and press the "?" button to get help on that command.
+From the editor window, select a DSL command and press the "?" button to get help on that command.
 
 Buttons
 - Click "File Open" to open a client-side DSL file.
@@ -20,11 +20,12 @@ Buttons
 - Click "Format" to format the contents of the the DSL field.
 - Click "?" to view the Help documentation.
 
-For example, to insert a subprocedure step, click "Insert Subprocedure Step", which 
-will populate the "Choose a Project" pull-down menu. Choose the
-project to which the procedure belongs, which will populate the "Choose a Procedure" 
-pull-down menu, and then select a procedure. The step template will appear in the
-editor.
+Insert Subprocedure Step
+- Click "Insert Subprocedure Step", this will populate the "Choose a Project" pull-down menu
+- From the "Choose a Project" pull-down menu, select the project to which the procedure belongs, this will populate the "Choose a Procedure" 
+pull-down menu
+- From the "Choose a Procedure" pull-down menu, select a procedure. The step template will appear in the
+editor at the cursor or selected text location.
 </pre>
   <p>This plugin has the following pages:</p>
   <p>
