@@ -7,6 +7,7 @@
   <property name="pluginKey" value="EC-DSLIDE" />
   <property name="pluginVersion" value="1.4.2" />
   <!-- 
+	1.4.3 - Fix issue with Flow menu, failing if menu not present
 	1.4.2 - Add to Flow menu
 	1.4.1 - Documentation updates
 	1.4 - Increase editor width to 100%

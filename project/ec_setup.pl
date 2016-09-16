@@ -9,14 +9,10 @@ if ($promoteAction eq 'promote') {
 	my $flowMenuPath = "/server/ec_ui/flowMenuExtension";
 	# Test whether the Flow menu property exists
 	my $menuXml;
-	eval {$commander->getProperty($flowMenuPath)};
-	if ($@) {
+	eval {$menuXml = $commander->getProperty($flowMenuPath)->findvalue("//value")};
+	if ($@ or $menuXml eq "") {  # If menu is not present create the menu XML
 		# Create new menu definition
 		$menuXml = qq(<?xml version="1.0" encoding="UTF-8"?><menu></menu>);
-	} else {
-		# Work with existing menu definition
-		$menuXml = $commander->getProperty($flowMenuPath)->findvalue("//value");
-		
 	}
 	my $parser = XML::LibXML->new();
 	my $doc = $parser->parse_string($menuXml);
