@@ -329,4 +329,12 @@ function insertSubprocedure() {
 		console.log( "project complete" );
 	  });
 }
+// adds tooltips to the edit buttons
+var editButtons = document.getElementById('editControls').getElementsByTagName('a');
+var numItems = editButtons.length;
 
+if (numItems > 0) {
+  for (var i = 0; i < numItems; i++) {
+    editButtons[i].title = editButtons[i].getAttribute('data-role');
+  }
+}
