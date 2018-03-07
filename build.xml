@@ -5,8 +5,9 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.4.4.1" />
+  <property name="pluginVersion" value="1.4.5" />
   <!-- 
+	1.4.5 - Add Javascript API example
 	1.4.4 - Added tooltips
 	1.4.3 - Fix issue with Flow menu, failing if menu not present
 	1.4.2 - Add to Flow menu
@@ -37,5 +38,5 @@
   </path>
   <property name="gwt.path.extras" value="extras" />
 
-  <import file="/opt/electriccloud/CommanderSDK6/build/buildTargets.xml" />
+  <import file="C:\Program Files\Electric Cloud\CommanderSDK\build\buildTargets.xml" />
 </project>
