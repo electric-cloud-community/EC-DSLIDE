@@ -191,6 +191,7 @@
 		setSelectOptions(list,"resource");
 		setSelectOptions(list,"resourcePool");
 		setSelectOptions(list,"resourceTemplate");
+		setSelectOptions(list,"runProcedure");
 		setSelectOptions(list,"schedule");
 		setSelectOptions(list,"snapshot");
 		setSelectOptions(list,"stage");
