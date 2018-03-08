@@ -1,0 +1,9 @@
+API commands: ectool | grep -Po '^    \K[^-\t ]*'
+DSL commands: ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'
+Create new templates with API commands: for i in `ectool | grep -Po '^    \K[^-\t ]*'`;do if [ ! -f htdocs/templates/$i.tmp ]; then echo "$i()" > htdocs/templates/$i.tmp;fi;done
+Create new templates with DSL commands: for i in `ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'`;do if [ ! -f htdocs/templates/$i.tmp ]; then echo "$i \"\"" > htdocs/templates/$i.tmp;fi;done
+
+Get Attributes - requires de-duping and sorting
+for i in `ectool | grep -Po '^    \K[^-\t ]*'`;do ectool evalDsl $i --describe 1 | awk '{if ($0 ~ /List of DSL methods/) {exit} else {if ($2 ~ /:/) {print substr($2, 1, length($2)-1)}}}';done
+
+for i in `ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'`;do ectool evalDsl $i --describe 1 | awk '{if ($0 ~ /List of DSL methods/) {exit} else {if ($2 ~ /:/) {print substr($2, 1, length($2)-1)}}}';done
