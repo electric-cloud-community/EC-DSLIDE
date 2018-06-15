@@ -5,8 +5,9 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.4.7" />
+  <property name="pluginVersion" value="1.4.8" />
   <!--
+	1.4.8 - Add Attribute Explorer example
 	1.4.7 - Update API and DSL commands and attributes
 	1.4.6 - Add runProcedure() to hint and templates
 	1.4.5 - Add Javascript API example
