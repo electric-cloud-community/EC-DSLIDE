@@ -1,1 +1,2 @@
-emailConfig "name"
+emailConfig "name",{
+}

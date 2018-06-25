@@ -5,8 +5,9 @@
 
   <!-- Plugin-specific properties -->
   <property name="pluginKey" value="EC-DSLIDE" />
-  <property name="pluginVersion" value="1.4.9" />
+  <property name="pluginVersion" value="1.4.10" />
   <!--
+	1.4.10 - Update DSL and API commands and attributes for EF v8.3
 	1.4.9 - Update Application and Pipeline examples
 	1.4.8 - Add Attribute Explorer example
 	1.4.7 - Update API and DSL commands and attributes

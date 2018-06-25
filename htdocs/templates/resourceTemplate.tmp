@@ -1,1 +1,2 @@
-resourceTemplate "name"
+resourceTemplate "name",{
+}

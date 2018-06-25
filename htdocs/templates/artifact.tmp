@@ -1,1 +1,2 @@
-artifact "name"
+artifact "name",{
+}

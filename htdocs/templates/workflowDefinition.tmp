@@ -1,1 +1,2 @@
-workflowDefinition "name"
+workflowDefinition "name",{
+}

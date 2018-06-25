@@ -1,1 +1,2 @@
-reportingFilter ""
+reportingFilter "name",{
+}

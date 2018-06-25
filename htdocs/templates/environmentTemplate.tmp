@@ -1,1 +1,2 @@
-environmentTemplate "name"
+environmentTemplate "name",{
+}

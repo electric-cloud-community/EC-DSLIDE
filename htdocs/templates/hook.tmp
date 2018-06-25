@@ -1,1 +1,2 @@
-hook "name"
+hook "name",{
+}

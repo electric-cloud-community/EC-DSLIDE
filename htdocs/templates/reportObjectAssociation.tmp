@@ -1,1 +1,2 @@
-reportObjectAssociation ""
+reportObjectAssociation "name",{
+}

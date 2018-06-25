@@ -1,1 +1,2 @@
-emailNotifier "name"
+emailNotifier "name",{
+}

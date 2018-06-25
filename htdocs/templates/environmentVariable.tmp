@@ -1,1 +1,2 @@
-environmentVariable ""
+environmentVariable "name",{
+}

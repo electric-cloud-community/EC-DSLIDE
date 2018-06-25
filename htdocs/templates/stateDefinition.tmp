@@ -1,1 +1,2 @@
-stateDefinition "name"
+stateDefinition "name",{
+}

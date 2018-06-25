@@ -1,1 +1,2 @@
-environmentTier "name"
+environmentTier "name",{
+}

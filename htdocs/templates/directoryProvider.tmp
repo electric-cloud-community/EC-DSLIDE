@@ -1,1 +1,2 @@
-directoryProvider "name"
+directoryProvider "name",{
+}

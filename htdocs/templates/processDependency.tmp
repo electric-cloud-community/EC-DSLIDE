@@ -1,1 +1,2 @@
-processDependency "name"
+processDependency "name",{
+}

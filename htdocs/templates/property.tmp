@@ -1,1 +1,2 @@
-property "name"
+property "name",{
+}

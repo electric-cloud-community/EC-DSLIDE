@@ -1,1 +1,2 @@
-aclEntry "name"
+aclEntry "name",{
+}
