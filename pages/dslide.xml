@@ -4,7 +4,7 @@
       <td valign="top" width="50%">
         <component plugin="EC-Core" ref="urlLoader">
           <plugin>@PLUGIN_KEY@</plugin>
-          <version>1.0</version>
+          <version>@PLUGIN_VERSION@</version>
           <url>../../../plugins/@PLUGIN_KEY@/index.html</url>
         </component>
       </td>

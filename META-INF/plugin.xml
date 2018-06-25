@@ -13,7 +13,7 @@
     <help>help.xml</help>
     
     <!-- Plugin author information. -->
-    <author>Electric-Cloud</author>
+    <author>ElectricCloud</author>
     <authorUrl/>
     
     <commander-version min="5.4"/>
