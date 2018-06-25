@@ -31,14 +31,13 @@ Limitations
 // Customizable values ------------------
 
 // Application Name
-def projectName = "DSLIDE Example"
+def ProjectName = "DSLIDE Example"
 def AppName = "DSLIDE Application"
-// Environment names ["env1", "env2" ...]
-def envs = ["QA","UAT"]
+def Envs = ["QA","UAT"]
 
 // Application-Environment tier mapping ["apptier1":"envtier1", "apptier2":"envtier2" ...]
-// The values will be used to create application and environment tier names and their maps
-def appEnvTiers = ["App":"Tomcat", "DB":"MySQL"]
+// The values will be used to create application and environment tier names and their mappings
+def AppEnvTiers = ["App":"Tomcat", "DB":"MySQL"]
 
 // Artifact group id
 def ArtifactRoot = "com.mycompany.dslide"
@@ -46,32 +45,32 @@ def ArtifactRoot = "com.mycompany.dslide"
 
 // Clean up from prior runs ------------------
 
-def envTiers = appEnvTiers.values()
-def appTiers = appEnvTiers.keySet()
+def EnvTiers = AppEnvTiers.values()
+def AppTiers = AppEnvTiers.keySet()
 
 // Remove old application model
-deleteApplication (projectName: projectName, applicationName: AppName) 
+deleteApplication (projectName: ProjectName, applicationName: AppName) 
 
 // Remove old Environment models
-envs.each { env ->
-	appTiers.each() { Tier ->
-		def res = "${env}_${Tier}"
+Envs.each { Env ->
+	AppTiers.each() { Tier ->
+		def res = "${Env}_${Tier}"
 		deleteResource resourceName: res
 	}
-	deleteEnvironment(projectName: projectName, environmentName: env)
+	deleteEnvironment(projectName: ProjectName, environmentName: Env)
 }
 
 // Create new -------------------------------
 
 def ArtifactVersions = []
 
-project projectName, {
+project ProjectName, {
 
 	// Create Environments, Tiers and Resources
-	envs.each { env ->
-		environment environmentName: env, {
-			envTiers.each() { Tier ->
-				def res = "${env}_${Tier}"
+	Envs.each { Env ->
+		environment environmentName: Env, {
+			EnvTiers.each() { Tier ->
+				def res = "${Env}_${Tier}"
 				environmentTier Tier, {
 					// create and add resource to the Tier
 					resource resourceName: res, hostName : "localhost"
@@ -80,9 +79,9 @@ project projectName, {
 		}
 	} // Environments
 
-	application applicationName: AppName, {
+	application AppName, {
 		
-		appTiers.each() { Tier ->
+		AppTiers.each() { Tier ->
 			applicationTier Tier, {
 				def CompName = "${Tier}_comp"
 				def ArtifactVersion = "1.35"
@@ -117,13 +116,8 @@ project projectName, {
 								overwrite : "\$" + "[/myComponent/ec_content_details/overwrite]",
 								versionRange : "\$" + "[/myJob/ec_" + CompName + "-version]"
 							]
-							
-						processStep "Deploy Artifact",
-							applicationName: null,
-							applicationTierName: null,
-							componentApplicationName: AppName,
-							command: "echo testing $CompName..."
-							
+		
+		
 						processStep "Deploy Artifact",
 							processStepType: 'command',
 							subproject: '/plugins/EC-Core/project',
@@ -182,11 +176,11 @@ project projectName, {
 		} // each Tier
 
 		// Create Application-Environment mappings
-		envs.each { Env -> 
-			tierMap tierMapName: "$AppName-$Env",
-				environmentProjectName: projectName, // Replace with projectName reference
+		Envs.each { Env -> 
+			tierMap "$AppName-$Env",
+				environmentProjectName: projectName,
 				environmentName: Env,
-				tierMapping: appEnvTiers			
+				tierMapping: AppEnvTiers			
 		} // each Env
 		
 	} // Applications
@@ -195,7 +189,7 @@ project projectName, {
 
 // Create publishArtifact procedure
 
-project projectName, {
+project ProjectName, {
 	procedure "Publish Artifact Versions", {
 		formalParameter "artifactName", type: "textentry", required: "1"
 		formalParameter "artifactVersion", type: "textentry", required: "1"
@@ -228,7 +222,7 @@ project projectName, {
 ArtifactVersions.each { ar ->
 	// Create artifact version
 	transaction {
-		runProcedure procedureName: "Publish Artifact Versions", projectName: projectName,
+		runProcedure procedureName: "Publish Artifact Versions", projectName: ProjectName,
 			actualParameter: [
 				artifactName: ar.artifactName,
 				fileContent: "echo Installing " + ar.artifactName,
