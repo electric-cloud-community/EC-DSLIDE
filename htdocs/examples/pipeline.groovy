@@ -1,79 +1,74 @@
-/* Run Deploy example first */
+/*
 
+Electric Flow DSL - Create a software delivery pipeline
+This example creates bare bones pipeline model.  It exercises and illustrates the following key Electric Flow features:
+
+- Pipeline modeling
+- Snapshot
+
+Instructions
+1. Create the application model first (see DSLIDE examples)
+1. Run this code through the DSLIDE (optionally edit the Customizable values below)
+2. Navigate to the pipeline model
+3. Run the pipeline, mark the validation 'Success'
+4. Approve UAT entry
+
+
+*/
 // Settings
-def proj = "Default"
-def pipe = "Example Pipeline"
-def app = "Sample Deploy Application"
+def ProjectName = "DSLIDE Example"
+def pipe = "DSLIDE Pipeline"
+def AppName = "DSLIDE Application"
 
-// Environment names ["env1", "env2" ...]
-def envs = [dev: "sample-dev", qa: "sample-qa"]
+// Environment and Stage names
+def Envs = ["QA","UAT"]
 
-def stages = [dev: "Development", qa: "Testing"]
-
-project proj, {
+project ProjectName, {
 	
-	// Procedure to create a development snapshot
-	procedure "Create Snapshot", {
-		formalParameter "environment",
-			required: "1",
-			expansionDeferred: "1"
-	
-		step "Delete the snapshot",
-			command:  "ectool deleteSnapshot Default \"$app\" \"$app-1.0\" "
-		
-		step "createSnapshot", 
-			command: "ectool createSnapshot Default \"$app\" \"$app-1.0\" --environmentName \"$envs.dev\" "
-	}
-	
-	// Dummy system tests
-	procedure "System Tests", {
-
-		step "Tests", 
-			command: "echo Testing..."
-		
-		step "Collect Test Results",
-			command: "ectool setProperty /myPipelineStageRuntime/ec_summary/testResults " +
-				// Dummy location...
-				"\'" + '<html><a href=\"TestResultsSummary.html\">Test Results</a></html>' + "\'"
-	}	
+	application AppName // In case the application has not already been created
 	
 	pipeline pipe, {
-		// Pipeline parameters
-		formalParameter "app",
-			type: "entry",
-			required: "1",
-			defaultValue: "Example Pipeline",
-			label: "Application Name",
-			orderIndex: 1
-		
+	
 		// Development State
-		stage stages.dev, {
+		stage Envs[0], {
 			task "Deploy",
 				taskType: "PROCESS",
-				subapplication: app,
-				subproject: proj,
+				subapplication: AppName,
+				subproject: projectName,
 				subprocess: "Deploy",
 				taskProcessType: "APPLICATION",
-				environmentName: envs.dev,
+				environmentName: Envs[0],
 				clearActualParameters: "true",
-				actualParameter: [ ec_smartDeployOption: "true" ],
-				errorHandling: "ignore"
-				
-			task "Create Snapshot",
-				taskType: 'PROCEDURE',
-				subproject: projectName,
-				subprocedure: 'Create Snapshot',
-				expansionDeferred: "1",
-				actualParameter: [
-					environment: envs.dev
-				],
-				errorHandling: "ignore"
+				actualParameter: [ ec_smartDeployOption: "true" ]
 
-		} // Dev Stage
+				task "Create Snapshot",{
+					actualParameter = [
+						'ApplicationName': AppName,
+						'EnvironmentName': Envs[0],
+						'EnvironmentProjectName': projectName,
+						'Overwrite': 'false',
+						'ProjectName': projectName,
+						'SnapshotName': (String) "${AppName}-${Envs[0]}-\$[/increment /myProject/SnapshotIndex]",
+					]
+					subpluginKey = 'EF-Utilities'
+					subprocedure = 'Create Snapshot'
+					taskType = 'UTILITY'
+				} // task
+			task "System Tests",{
+				subpluginKey = 'EC-Core'
+				subprocedure = 'RunCommand'
+				actualParameter = [
+					commandToRun: "ectool setProperty \"/myPipelineStageRuntime/ec_summary/Test Results\" " +
+						// Dummy location...
+						"\'" + '<html><a href=\"TestResultsSummary.html\">links</a></html>' + "\'"
+				]
+				taskType = 'COMMAND'
+			} // task			
+		} // QA Stage
 		
-		stage stages.qa, {
+		stage Envs[1], {
 		
-			// Entry gate to QA
+			// Entry gate to UAT
 			task "Entry gate approval",
 				taskType: 'APPROVAL',
 				approver: ['admin'],
@@ -81,22 +76,27 @@ project proj, {
 				notificationTemplate: 'ec_default_pipeline_notification_template'
 
 			task "Deploy",
-				subapplication: app,
-				subproject: projectName,
-				subprocess: "Deploy",
 				taskProcessType: "APPLICATION",
-				environmentName: envs.qa,
+				subproject: projectName,
+				subapplication: AppName,
+				subprocess: "Deploy",
+				environmentName: Envs[1],
 				advancedMode: "1", // allow for variable snapshotName
-				snapshotName: "$app-1.0",
+				snapshotName: "${AppName}-${Envs[0]}-\$[/myProject/SnapshotIndex]",
 				clearActualParameters: true,
 				taskType: "PROCESS",
-				actualParameter: [ ec_smartDeployOption: "true" ],
-				errorHandling: "ignore"
+				actualParameter: [ ec_smartDeployOption: "true" ]
 
-			task "System Tests",
-				taskType: 'PROCEDURE',
-				subproject: projectName,
-				subprocedure: 'System Tests'
+			task "Smoke Test",{
+				subpluginKey = 'EC-Core'
+				subprocedure = 'RunCommand'
+				actualParameter = [
+					commandToRun: "ectool setProperty \"/myPipelineStageRuntime/ec_summary/Smoke Test Restults\" " +
+						// Dummy location...
+						"\'" + '<html><a href=\"TestResultsSummary.html\">link</a></html>' + "\'"
+				]
+				taskType = 'COMMAND'
+			} // task		
 				
 		} // Stage QA
 
