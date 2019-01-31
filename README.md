@@ -13,7 +13,7 @@ This tool was developed during and Electric Cloud hackathon in August 2015.  Whi
 ## Support information
 This tool was developed with the ElectricFlow SDK 6.0.
 
-While this tool has had very little formal testing, the web-based DSL editor is used extensively by the field engineers for editting and running DSL scripts.
+While this tool has had very little formal testing, the web-based DSL editor is used extensively by the field engineers for editing and running DSL scripts.
 
 ### Known Issues
 * The tool uses the ElectricFlow REST API.  Some users have experienced problems accessing the REST documentation and API; the workaround is to place the file restapi.conf (in the same directory as this README file) in the ElectricFlow Apache conf/conf.d directory and restart the commanderApache service.
