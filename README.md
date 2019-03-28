@@ -6,18 +6,15 @@ The DSL IDE is an ElectricFlow plugin.  The plugin jar file is located in the 'o
 
 This tool was developed during and Electric Cloud hackathon in August 2015.  While we feel it is useful in its current form, it is provided "as is" with no commitment to further support.  Please feel free to offer suggestions in the form of Github project "Issues" and we or others in the Github community will try to address them.
 
-## Installation information
-* Download out/EC-DSLIDE.jar
-* From the ElectricFlow Administration, Plugin Tab, install this plugin file, then promote it
+## Build information
+This plugin is build using (ecpluginbuilder)[https://github.com/electric-cloud/ecpluginbuilder]
 
-## Support information
-This tool was developed with the ElectricFlow SDK 6.0.
+## Installation information
+This plugin is available from the ElectricFlow Plugin Catalog and the (ElectricCloud Plugins)[https://electric-cloud.com/plugins/directory/]
 
 While this tool has had very little formal testing, the web-based DSL editor is used extensively by the field engineers for editing and running DSL scripts.
 
 ### Known Issues
-* The tool uses the ElectricFlow REST API.  Some users have experienced problems accessing the REST documentation and API; the workaround is to place the file restapi.conf (in the same directory as this README file) in the ElectricFlow Apache conf/conf.d directory and restart the commanderApache service.
-
 * Works well on Chrome and Firefox.  It does not seem to run on Internet Explorer.
 
 ## Acknowledgements
