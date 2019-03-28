@@ -22,7 +22,7 @@
 
     <key>EC-DSLIDE</key>
     <version>1.5</version>
-    <label>EC-DSLIDE</label>
+    <label>DSL IDE</label>
     <description>ElectricFlow DSL editor and runner.</description>
 
     <!-- If the plugin has a configure page, declare it here.  This will show up as a Configure link for this plugin on the Plugins page. 
