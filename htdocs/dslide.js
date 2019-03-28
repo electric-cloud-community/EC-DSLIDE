@@ -2,14 +2,42 @@
 // 9.24.15 - Set resultWindow to readonly to allow copy (issue 5);
 // 10.6.15 - Improved results window output: removed JSON and \n
 //         - Added insert procedure step
+// 3.28.19 - Fix results window data truncation
 
-var minLines = 12;
-var startingValue = '';
-/*
-for (var i = 0; i < minLines; i++) {
-	startingValue += '\n';
-}
-*/
+var help = `\
+Press the ? to view this help message
+
+Enter your DSL commands in the editor window above, then press "Submit DSL" to run
+
+Press <ctrl>-SPACE to list available DSL commands
+- Type first few letters of command to filter
+
+Use the "Examples" pull down to load sample DSL
+
+To get the documentation on a DSL command, select the DSL command then press the ? button
+
+Buttons
+- File Open... open a client-side DSL file
+- File Save... save a client-side DSL file
+- Undo
+- Erase editor window content
+- Format the DSL window
+- Help
+
+To insert a subprocedure step, press the "Insert Subprocedure Step" button.
+This will populate the "Choose a Project" pull down menu. Choose the procedure
+project.  This will populate the "Choose a Procedure" pull down menu.  Select
+the desired procedure. The step template will appear in the editor.
+
+Control Characters <ctrl>-
+- z undo
+- y redo
+- s Save File...
+- o Open File...
+- c Copy
+- v Paste
+
+`
 
 var hotkey = function (e) {
 	 if (e.shiftKey) {
@@ -30,26 +58,23 @@ var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
   extraKeys: {"Ctrl-Space": "autocomplete"},
   onKeyEvent: function(e , s){
 		hotkey($.event.fix(e));
-  },
-  value: startingValue
+  }
 });
+//cmResize(editor);
 
 var resultWindow = CodeMirror.fromTextArea(document.getElementById("result"), {
   lineNumbers: false,
   gutter: true,
-  lineWrapping: true,
+  lineWrapping: false,
   readOnly: true,
-  mode: "text/x-groovy"
+  mode: "text"
 });
-//resultWindow.setSize( width: 600, height: 150 );
+//cmResize(resultWindow);
+resultWindow.setValue(help);
 
 function populateEditor(txt) {
-	//var txt = "myText - " + objName;
-	//editor.replaceSelection(txt);
 	var inchar = editor.findWordAt(editor.getCursor());
 	editor.replaceRange(txt, inchar.anchor, inchar.head );
-
-	//format();
 }
 
 function format() {
@@ -68,30 +93,30 @@ function submitDsl() {
 }
 
 function getTemplate(tempName) {
-var templateFile = 'templates/'+tempName+'.tmp';
-console.log('Inside gettemplate - TemplateName' + templateFile);
-getFile ( templateFile );
+	var templateFile = 'templates/'+tempName+'.tmp';
+	console.log('Inside gettemplate - TemplateName' + templateFile);
+	getFile ( templateFile );
 }
 
 function getExample(name) {
-var fileName = 'examples/'+name+'.groovy';
-console.log('getExample' + name);
-editor.setValue("");
-getFile ( fileName );
+	var fileName = 'examples/'+name+'.groovy';
+	console.log('getExample' + name);
+	editor.setValue("");
+	getFile ( fileName );
 }
 
 function getFile(fileName) {
-$.ajax(fileName, {
-dataType: 'text',
-success: function (data) {
-console.log('Ajax call was sucessfull');
-populateEditor (data);
-},
-error: function(data, textStatus, errorThrown){
-console.log('request failed' +
-textStatus + ' errorThrown ' + errorThrown);
-}
-  }); 
+	$.ajax(fileName, {
+		dataType: 'text',
+		success: function (data) {
+			console.log('Ajax call was sucessfull');
+			populateEditor (data);
+		},
+		error: function(data, textStatus, errorThrown){
+			console.log('request failed' +
+			textStatus + ' errorThrown ' + errorThrown);
+		}
+	});
 }
 
 function runDsl() {
@@ -134,58 +159,37 @@ function setSelectOptions(list, optionString) {
 }
 
 function getHelp() {
-var sel = getSelection();
-if (sel){
-var data = { "dsl": sel, "describe": "true" };
-//var data = { "dsl": "step", "describe": "true" };
-$.ajax({
-  type: "POST",
-  url: "../../../rest/v1.0/server/dsl",
-  dataType: 'Object',
-  contentType: 'application/json; charset=utf-8',
-  data: JSON.stringify(data),
-  /*
-  success: function (data) {
-	testing = data;
-	console.log(testing);
-  }
-  */
-success: function (data) {
-  testing = data;
-  console.log(testing);
-  document.getElementById('result').innerHTML = JSON.parse(testing.responseText).value;
-  resultWindow.setValue( JSON.parse(testing.responseText).value );
-},
-error: function (data, testStatus, errorThrown) {
-  testing = data;
-  console.log(testing);
-  resultWindow.setValue( JSON.parse(testing.responseText).value );
-}	  
-});
-} else {
-	resultWindow.setValue(`\
-Welcome to EF DSL Editor
-
-Enter your DSL commands and press "Submit DSL" to run
-
-Press <ctrl>-SPACE to list available DSL commands
-- Type first few letters of command to filter
-
-Use the "Examples" pull down to load sample DSL
-
-Select a DSL command and press ? button to get help on the command
-
-Buttons
-- File Open... open a client-side DSL file
-- File Save... save a client-side DSL file
-- Undo
-- Erase results window content
-- Format the DSL window
-- Help
-
-To insert a subprocedure step, press the "Insert Subprocedure Step" button.  This will populate the "Choose a Project" pull down menu. Choose the procedure project.  This will populate the "Choose a Procedure" pull down menu.  Select the desired procedure. The step template will appear in the editor.
-	`);
-}
+	var sel = getSelection();
+	if (sel){
+		var data = { "dsl": sel, "describe": "true" };
+		//var data = { "dsl": "step", "describe": "true" };
+		$.ajax({
+			  type: "POST",
+			  url: "../../../rest/v1.0/server/dsl",
+			  dataType: 'Object',
+			  contentType: 'application/json; charset=utf-8',
+			  data: JSON.stringify(data),
+			  /*
+			  success: function (data) {
+				testing = data;
+				console.log(testing);
+			  }
+			  */
+			success: function (data) {
+			  testing = data;
+			  console.log(testing);
+			  document.getElementById('result').innerHTML = JSON.parse(testing.responseText).value;
+			  resultWindow.setValue( JSON.parse(testing.responseText).value );
+			},
+			error: function (data, testStatus, errorThrown) {
+			  testing = data;
+			  console.log(testing);
+			  resultWindow.setValue( JSON.parse(testing.responseText).value );
+			}	  
+		});
+	} else {
+		resultWindow.setValue(help);
+	}
 }	
 $('#editControls a').click(function (e) {
 	switch ($(this).data('role')) {
@@ -212,7 +216,7 @@ $('#editControls a').click(function (e) {
 		break;
 	 case 'clear':
 		console.log($(this).data('role'));
-		resultWindow.setValue( "" );
+		editor.setValue( "" );
 		break;
 	 default:
 		console.log($(this).data('role'));
