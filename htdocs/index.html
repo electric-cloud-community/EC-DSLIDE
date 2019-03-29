@@ -19,6 +19,8 @@
 <script src="CodeMirror/addon/hint/show-hint.js"></script>
 <script src="CodeMirror/addon/hint/anyword-hint.js"></script>
 <script src="CodeMirror/addon/edit/matchbrackets.js"></script>
+<script src="cm-resize/dist/dist/cm-resize.js"></script>
+<script src="cm-resize/dist/dist/cm-resize.min.js"></script>
 <script src="filemanager.js"></script>
 
 <style class="cp-pen-styles">#editControls {
@@ -53,11 +55,9 @@
     <div class=actionspicture>
       <img src="CodeMirror/images/EClogo.png">
 <h2>
-Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.
+Welcome to the ElectricFlow DSL Lite Editor
 </h2>    </div>
   </div>
-
-
   <div id='editControls'>
     <div>
           <a data-role='fileOpen' href='javascript:void(0)'><i class='fa fa-folder-open'></i></a>    
@@ -98,6 +98,7 @@ Welcome to the ElectricFlow DSL Lite Editor.  Press the ? button to get started.
   </div>
     
   <textarea id=demotext>
+  // Enter your DSL here or select an Example from above
 
   </textarea>
   <input type = "button"
