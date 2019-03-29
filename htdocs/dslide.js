@@ -50,46 +50,53 @@ $(document).keypress(hotkey);
 CodeMirror.commands.autocomplete = function(cm) {
 	cm.showHint({hint: CodeMirror.hint.anyword});
 }
-var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+var editorWindow = CodeMirror.fromTextArea(document.getElementById("editor"), {
   lineNumbers: true,
   gutter: true,
   lineWrapping: true,
+  viewportMargin: Infinity,
   mode: "text/x-groovy",
   extraKeys: {"Ctrl-Space": "autocomplete"},
   onKeyEvent: function(e , s){
 		hotkey($.event.fix(e));
   }
 });
-//cmResize(editor);
+editorWindow.setValue(`\
+// Enter your DSL code here or select from the Examples above
+
+
+`);
+cmResize(editorWindow);
 
 var resultWindow = CodeMirror.fromTextArea(document.getElementById("result"), {
   lineNumbers: false,
   gutter: true,
-  lineWrapping: false,
+  lineWrapping: true,
+  viewportMargin: Infinity,
   readOnly: true,
   mode: "text"
 });
-//cmResize(resultWindow);
-resultWindow.setValue(help);
+cmResize(resultWindow);
+resultWindow.setValue("Press the ? button to to get help");
 
 function populateEditor(txt) {
-	var inchar = editor.findWordAt(editor.getCursor());
-	editor.replaceRange(txt, inchar.anchor, inchar.head );
+	var inchar = editorWindow.findWordAt(editorWindow.getCursor());
+	editorWindow.replaceRange(txt, inchar.anchor, inchar.head );
 }
 
 function format() {
-  var totalLines = editor.lineCount();  
-  editor.autoFormatRange({line:0, ch:0}, {line:totalLines});
+  var totalLines = editorWindow.lineCount();  
+  editorWindow.autoFormatRange({line:0, ch:0}, {line:totalLines});
 }
 
 function getSelection() {
-	console.log ( editor.getSelection());
-	return editor.getSelection();
+	console.log ( editorWindow.getSelection());
+	return editorWindow.getSelection();
 }
 
 function submitDsl() {
-  console.log(editor.getValue());
-  return editor.getValue();
+  console.log(editorWindow.getValue());
+  return editorWindow.getValue();
 }
 
 function getTemplate(tempName) {
@@ -101,7 +108,7 @@ function getTemplate(tempName) {
 function getExample(name) {
 	var fileName = 'examples/'+name+'.groovy';
 	console.log('getExample' + name);
-	editor.setValue("");
+	editorWindow.setValue("");
 	getFile ( fileName );
 }
 
@@ -120,7 +127,7 @@ function getFile(fileName) {
 }
 
 function runDsl() {
-  var data = { "dsl": editor.getValue() };
+  var data = { "dsl": editorWindow.getValue() };
   resultWindow.setValue( "Sending DSL:\n" + data["dsl"]);
   //var data = { "dsl": 'return "testing..."' };
   $.ajax({
@@ -152,8 +159,8 @@ function runDsl() {
 }  
 
 function setSelectOptions(list, optionString) {
-  var inchar = editor.findWordAt(editor.getCursor());
-  var word = editor.getRange(inchar.anchor, inchar.head);
+  var inchar = editorWindow.findWordAt(editorWindow.getCursor());
+  var word = editorWindow.getRange(inchar.anchor, inchar.head);
   console.log(optionString+"---"+JSON.stringify(inchar)+"---"+JSON.stringify(word));
    if (optionString.indexOf(word) == 0) list.push(optionString);
 }
@@ -195,7 +202,7 @@ $('#editControls a').click(function (e) {
 	switch ($(this).data('role')) {
 	 case 'undo':
 		console.log($(this).data('role'));
-		editor.undo();
+		editorWindow.undo();
 		break;
 	 case 'fileOpen':
 		console.log($(this).data('role'));
@@ -203,8 +210,8 @@ $('#editControls a').click(function (e) {
 		break;
 	 case 'fileSave':
 		console.log($(this).data('role'));
-		console.log(editor.getValue());
-		save(editor.getValue(), 'dsl.groovy' );
+		console.log(editorWindow.getValue());
+		save(editorWindow.getValue(), 'dsl.groovy' );
 		break;
 	 case 'justifyFull':
 		console.log($(this).data('role'));
@@ -216,7 +223,7 @@ $('#editControls a').click(function (e) {
 		break;
 	 case 'clear':
 		console.log($(this).data('role'));
-		editor.setValue( "" );
+		editorWindow.setValue( "" );
 		break;
 	 default:
 		console.log($(this).data('role'));
@@ -324,7 +331,7 @@ function insertSubprocedure() {
 			stepTemplate += "  ]\n";
 		}
 		
-		editor.replaceSelection(stepTemplate)
+		editorWindow.replaceSelection(stepTemplate)
 	  })
 	  .fail(function() {
 		console.log( "project error" );

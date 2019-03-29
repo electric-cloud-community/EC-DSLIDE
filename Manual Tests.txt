@@ -1,0 +1,4 @@
+EC-DSLIDE Testing
+
+1. Use browser Developer Tools console to make sure there are no loading errors
+2. Load and run the "Iterate: list projects" example

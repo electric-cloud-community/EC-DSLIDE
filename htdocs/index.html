@@ -15,12 +15,12 @@
 <script src="ajax/libs/jquery-ui.min.js"></script>
 <script src="CodeMirror/lib/codemirror.js"></script>
 <script src="CodeMirror/lib/formatting.js"></script>
-<script src="CodeMirror/mode/groovy/groovy.js"></script>
+<script src="dsl.js"></script>
 <script src="CodeMirror/addon/hint/show-hint.js"></script>
-<script src="CodeMirror/addon/hint/anyword-hint.js"></script>
+<script src="dsl-hint.js"></script>
 <script src="CodeMirror/addon/edit/matchbrackets.js"></script>
-<script src="cm-resize/dist/dist/cm-resize.js"></script>
-<script src="cm-resize/dist/dist/cm-resize.min.js"></script>
+<script src="cm-resize/dist/cm-resize.js"></script>
+<script src="cm-resize/dist/cm-resize.min.js"></script>
 <script src="filemanager.js"></script>
 
 <style class="cp-pen-styles">#editControls {
@@ -43,7 +43,7 @@
 
 <style>
   .CodeMirror { height: auto; border: 1px solid #ddd; }
-  .CodeMirror-scroll { max-height: 500px; }
+  .CodeMirror-scroll { max-height: Infinity; }
   .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
 </style>
 
@@ -97,10 +97,8 @@ Welcome to the ElectricFlow DSL Lite Editor
   </select>
   </div>
     
-  <textarea id=demotext>
-  // Enter your DSL here or select an Example from above
+  <textarea id="editor" style="width: 600px; height: 150px;"></textarea>
 
-  </textarea>
   <input type = "button"
         value = "Submit DSL"
         onclick = "runDsl();"/>   
@@ -109,7 +107,7 @@ Welcome to the ElectricFlow DSL Lite Editor
 		accept = ".groovy"
 		value = "Load DSL"
 		style = "visibility:hidden;" 
-        onchange = "load(event, editor);"/>   
+        onchange = "load(event, editorWindow);"/>   
   </form>
 
   <textarea id="result" style="width: 600px; height: 150px;"></textarea>
@@ -117,6 +115,6 @@ Welcome to the ElectricFlow DSL Lite Editor
 <script src="dslide.js"></script>
  
 </section>
-EC-DSLIDE Version @PLUGIN_VERSION@
+EC-DSLIDE Version 1.5.2
 </article>
 </html>
