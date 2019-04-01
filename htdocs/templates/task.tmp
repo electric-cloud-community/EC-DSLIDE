@@ -1,2 +1,12 @@
-task "name",{
+task "command",{
+	actualParameter = [
+		'commandToRun': 'echo running...',
+	]
+	taskType = 'COMMAND'
+}
+task "manual",{
+	taskType = 'MANUAL'
+	approver = [
+		'admin',
+	]
 }

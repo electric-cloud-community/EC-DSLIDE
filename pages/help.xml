@@ -1,14 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<title>@PLUGIN_KEY@ Help</title>
+<head>
+    <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
+    <title>DSL IDE</title>
+    <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
+</head>
 <body>
-	<h1>@PLUGIN_KEY@ Help</h1>
-	<p>Plugin Version @PLUGIN_VERSION@</p>
-	<hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade"/>
-
-	<h1>Overview</h1>
+    <div class="help">
+        <h1>@PLUGIN_KEY@</h1>
+        <p>Plugin Version @PLUGIN_VERSION@</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
 <pre>Welcome to ElectricFlow DSL Editor
 Enter your DSL commands and press "Submit DSL" to run.
 
@@ -37,5 +38,6 @@ editor at the cursor or selected text location.
 		<p>
 			<a href="../../plugins/@PLUGIN_NAME@/index.html">DSL IDE</a>
 		</p>
+		</div>
 	</body>
 </html>
