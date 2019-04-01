@@ -1,9 +1,22 @@
-API commands: ectool | grep -Po '^    \K[^-\t ]*'
-DSL commands: ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'
-Create new templates with API commands: for i in `ectool | grep -Po '^    \K[^-\t ]*'`;do if [ ! -f htdocs/templates/$i.tmp ]; then echo "$i()" > htdocs/templates/$i.tmp;fi;done
-Create new templates with DSL commands: for i in `ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'`;do if [ ! -f htdocs/templates/$i.tmp ]; then echo "$i \"\"" > htdocs/templates/$i.tmp;fi;done
+# Shell Commands to update dsl.js and dsl-hint.js files and
+# create template files
 
-Get Attributes - requires de-duping and sorting
-for i in `ectool | grep -Po '^    \K[^-\t ]*'`;do ectool evalDsl $i --describe 1 | awk '{if ($0 ~ /List of DSL methods/) {exit} else {if ($2 ~ /:/) {print substr($2, 1, length($2)-1)}}}';done
 
-for i in `ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+'`;do ectool evalDsl $i --describe 1 | awk '{if ($0 ~ /List of DSL methods/) {exit} else {if ($2 ~ /:/) {print substr($2, 1, length($2)-1)}}}';done
+export DSL_COMMANDS=$(ectool evalDsl dsl --describe 1 | grep -Po '^\* \K[^:.]+')
+export API_COMMANDS=$(ectool | grep -Po '^    \K[^-\t ]*')
+# dsl.js
+echo var dsl_func_keywords = words\( \"\" \)\;
+echo var dsl_func_keywords = words\( \"$API_COMMANDS\" \)\;
+ectool evalDsl --dslFile CommandAttributes.groovy --parameters "{\"commands\":\"$DSL_COMMANDS $API_COMMANDS\"}"
+
+# dsl-hint.js setSelectOptions
+for i in $DSL_COMMANDS $API_COMMANDS;
+do
+	printf "setSelectOptions(list,\"%s\");\n" $i
+done
+
+#Create new templates with API commands
+./CreateNewApiTemplateFiles.sh
+
+#Create new templates with DSL commands:
+./CreateNewDslTemplateFiles.sh

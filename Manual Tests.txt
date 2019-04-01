@@ -2,3 +2,6 @@ EC-DSLIDE Testing
 
 1. Use browser Developer Tools console to make sure there are no loading errors
 2. Load and run the "Iterate: list projects" example
+3. Copy the text content of dsl.js dsl_keywords, dsl_func_keywords, dsl_attr_keywords into DSLIDE and make sure coloration is as expected. You may have to do this in chunch due to the default line scan length of 10000 characters.
+4. Command expansion
+5. Version number

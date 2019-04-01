@@ -15,9 +15,10 @@
 <script src="ajax/libs/jquery-ui.min.js"></script>
 <script src="CodeMirror/lib/codemirror.js"></script>
 <script src="CodeMirror/lib/formatting.js"></script>
-<script src="dsl.js"></script>
-<script src="CodeMirror/addon/hint/show-hint.js"></script>
-<script src="dsl-hint.js"></script>
+<!-- Moving customization out of CodeMirror directory to simplify CodeMirror updates -->
+<script src="dsl.js"></script> <!-- Formerly CodeMirror/mode/groovy/groovy.js -->
+<script src="show-hint.js"></script> <!-- Formerly CodeMirror/addon/hint/show-hint.js -->
+<script src="dsl-hint.js"></script> <!-- CodeMirror/addon/hint/anyword-hint.js -->
 <script src="CodeMirror/addon/edit/matchbrackets.js"></script>
 <script src="cm-resize/dist/cm-resize.js"></script>
 <script src="cm-resize/dist/cm-resize.min.js"></script>
@@ -45,6 +46,10 @@
   .CodeMirror { height: auto; border: 1px solid #ddd; }
   .CodeMirror-scroll { max-height: Infinity; }
   .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+  .cm-s-default .cm-keyword {color: #708;}
+  .cm-s-default .cm-dsl {color: #52C3E9; }
+  .cm-s-default .cm-dslfunc {color: #FF00FF; }
+  .cm-s-default .cm-dslattr {color: #8800FF; }
 </style>
 
 
@@ -115,6 +120,6 @@ Welcome to the ElectricFlow DSL Lite Editor
 <script src="dslide.js"></script>
  
 </section>
-EC-DSLIDE Version 1.5.2
+@PLUGIN_KEY@ Version @PLUGIN_VERSION@
 </article>
 </html>

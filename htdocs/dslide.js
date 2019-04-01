@@ -55,7 +55,7 @@ var editorWindow = CodeMirror.fromTextArea(document.getElementById("editor"), {
   gutter: true,
   lineWrapping: true,
   viewportMargin: Infinity,
-  mode: "text/x-groovy",
+  mode: "text/x-dsl",
   extraKeys: {"Ctrl-Space": "autocomplete"},
   onKeyEvent: function(e , s){
 		hotkey($.event.fix(e));
