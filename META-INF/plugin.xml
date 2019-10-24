@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 	<!--
+		1.5.5 - Add auto fill for pipeline task types #34, Fix label, CloudBees
 		1.5.4 - Add some helper templates according to issue #22. Fix help.
 		1.5.3 - Update command list, closes #28
 		1.5.2 - Expandable editor window, closes #4
@@ -25,9 +26,9 @@
 	-->
 
     <key>EC-DSLIDE</key>
-    <version>1.5.4</version>
-    <label>DSL IDE</label>
-    <description>ElectricFlow DSL editor and runner.</description>
+    <version>1.5.5</version>
+    <label>EC-DSLIDE</label>
+    <description>CloudBees Flow DSL editor and runner.</description>
 
     <!-- If the plugin has a configure page, declare it here.  This will show up as a Configure link for this plugin on the Plugins page. 
     <configure>configure.xml</configure>
@@ -37,7 +38,7 @@
     <help>help.xml</help>
     
     <!-- Plugin author information. -->
-    <author>ElectricCloud</author>
+    <author>CloudBees</author>
     <authorUrl/>
     
     <commander-version min="5.4"/>

@@ -10,3 +10,16 @@ task "manual",{
 		'admin',
 	]
 }
+task 'plugin', {
+	actualParameter = [
+		param1: 'value1'
+	]
+	subpluginKey = 'EC-xxxxx'
+	subprocedure = 'yyyyy'
+	taskType = 'PLUGIN'
+}
+task 'procedure', {
+	subprocedure = ''
+	subproject = ''
+	taskType = 'PROCEDURE'
+}
