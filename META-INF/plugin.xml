@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 	<!--
-		1.5.5 - Add auto fill for pipeline task types #34, Fix label, CloudBees
+		1.5.5 - Add auto fill for pipeline task types fixes #34, Fix label, CloudBees
 		1.5.4 - Add some helper templates according to issue #22. Fix help.
 		1.5.3 - Update command list, closes #28
 		1.5.2 - Expandable editor window, closes #4
