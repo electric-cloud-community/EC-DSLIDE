@@ -1,5 +1,7 @@
 # EC-DSLIDE
 
+(DSLIDE is now part of the CloudBees CD product making this repository obsolete)
+
 CloudBees Flow DSL web-based editor and runner
 
 The DSL IDE is an CloudBees Flow plugin.  Once installed, the "DSL IDE" tab will appear on the CloudBees Flow menu page.  It may be necessary to login to the CloudBees Flow server again when launching the DSL IDE.  Select the question mark icon for help.
