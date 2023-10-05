@@ -1,6 +1,5 @@
 # EC-DSLIDE
-
-(DSLIDE is now part of the CloudBees CD product making this repository obsolete)
+> **_NOTE:_** DSLIDE is now part of the CloudBees CD product making this repository obsolete, see [documentation](https://docs.beescloud.com/docs/cloudbees-cd-api/latest/flow-api/dslide#_dsl_ide) for details.
 
 CloudBees Flow DSL web-based editor and runner
 
